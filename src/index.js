@@ -8,7 +8,10 @@ let imageTiles = new Image()
 function gameLoop(timestamp) {
     let deltaTime = timestamp - lastTime
     lastTime = timestamp
-    // context.drawImage(imageTiles, 0, 0)
+    context.clearRect(0, 0, game.width, game.height)
+    context.fillStyle = 'black'
+    context.fillRect(0, 0, game.width, game.height)
+    game.draw(context, imageTiles)
     requestAnimationFrame(gameLoop)
 }
 
@@ -16,5 +19,4 @@ imageTiles.src = '../assets/tiles.png'
 imageTiles.onload = () => {
     requestAnimationFrame(gameLoop)
     game.start()
-    game.draw(context, imageTiles)
 }
