@@ -11,6 +11,7 @@ function gameLoop(timestamp) {
     context.clearRect(0, 0, game.width, game.height)
     context.fillStyle = 'black'
     context.fillRect(0, 0, game.width, game.height)
+    game.update(deltaTime)
     game.draw(context, imageTiles)
     requestAnimationFrame(gameLoop)
 }

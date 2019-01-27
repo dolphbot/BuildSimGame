@@ -1,21 +1,41 @@
 export default class KeyboardInput {
     constructor(game) {
+        this.W = false
+        this.S = false
+        this.A = false
+        this.D = false
+
         document.addEventListener('keydown', event => {
-            let dx = 0
-            let dy = 0
-            if (event.keyCode === 87) {
-                dy = 1
+            switch (event.keyCode) {
+                case 87:
+                    this.W = true
+                    break
+                case 83:
+                    this.S = true
+                    break
+                case 65:
+                    this.A = true
+                    break
+                case 68:
+                    this.D = true
+                    break
             }
-            if (event.keyCode === 83) {
-                dy = -1
+        })
+        document.addEventListener('keyup', event => {
+            switch (event.keyCode) {
+                case 87:
+                    this.W = false
+                    break
+                case 83:
+                    this.S = false
+                    break
+                case 65:
+                    this.A = false
+                    break
+                case 68:
+                    this.D = false
+                    break
             }
-            if (event.keyCode === 65) {
-                dx = 1
-            }
-            if (event.keyCode === 68) {
-                dx = -1
-            }
-            game.pan(dx, dy)
         })
     }
 }
