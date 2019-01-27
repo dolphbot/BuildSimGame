@@ -1,4 +1,5 @@
 import KeyboardInput from './keyboard.js'
+import MouseInput from './mouse.js'
 
 const GAMESTATE = {
     MENU: 0,
@@ -20,14 +21,17 @@ export default class Game {
         this.offsetX = 0
         this.offsetY = 0
         this.speed = 1
+        this.scale = 1
         this.keyboard = null
+        this.mouse = null
     }
 
     start() {
         for (let i = 0; i < this.rows * this.columns; i++) {
             this.tiles.push(Math.floor(Math.random() * Math.floor(4)))
         }
-        this.keyboard = new KeyboardInput(this)
+        this.keyboard = new KeyboardInput()
+        this.mouse = new MouseInput(this) 
         this.offsetX = (this.width / 2) - (this.rows * this.tileSize / 2)
         this.offsetY = (this.height / 2) - (this.columns * this.tileSize / 2)
     }
@@ -58,6 +62,11 @@ export default class Game {
         })
     }
 
-    pan(dx, dy) {
+    zoom(deltaY) {
+        if (deltaY < 0) {
+            this.scale = 0.9
+        } else {
+            this.scale = 1.1
+        }
     }
 }

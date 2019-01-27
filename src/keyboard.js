@@ -1,5 +1,5 @@
 export default class KeyboardInput {
-    constructor(game) {
+    constructor() {
         this.W = false
         this.S = false
         this.A = false

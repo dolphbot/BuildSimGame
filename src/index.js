@@ -8,6 +8,10 @@ let imageTiles = new Image()
 function gameLoop(timestamp) {
     let deltaTime = timestamp - lastTime
     lastTime = timestamp
+    if (game.scale !== 1) {
+        context.scale(game.scale, game.scale)
+        game.scale = 1
+    }
     context.clearRect(0, 0, game.width, game.height)
     context.fillStyle = 'black'
     context.fillRect(0, 0, game.width, game.height)
