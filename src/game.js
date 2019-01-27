@@ -9,7 +9,7 @@ const GAMESTATE = {
 
 
 export default class Game {
-    constructor() {
+    constructor(ctx) {
         this.state = GAMESTATE.MENU
         this.objects = []
         this.tiles = []
@@ -24,6 +24,7 @@ export default class Game {
         this.scale = 1
         this.keyboard = null
         this.mouse = null
+        this.ctx = ctx
     }
 
     start() {
@@ -63,10 +64,7 @@ export default class Game {
     }
 
     zoom(deltaY) {
-        if (deltaY < 0) {
-            this.scale = 0.9
-        } else {
-            this.scale = 1.1
-        }
+        this.scale = 1 + (deltaY / 1000)
+        this.ctx.scale(this.scale, this.scale)
     }
 }
