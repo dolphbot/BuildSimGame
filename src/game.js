@@ -50,21 +50,40 @@ export default class Game {
 
     draw(ctx, img) {
         this.tiles.forEach((tile, index) => {
-            ctx.drawImage(img, 
+            ctx.drawImage(
+                img, 
                 tile * this.tileSize,
                 0, 
                 this.tileSize, 
                 this.tileSize, 
-                (index % this.columns) * this.tileSize + this.offsetX, 
-                Math.floor(index / this.columns) * this.tileSize + this.offsetY, 
-                this.tileSize, 
-                this.tileSize)
+                (index % this.columns) * this.tileSize * this.scale + this.offsetX, 
+                Math.floor(index / this.columns) * this.tileSize * this.scale + this.offsetY, 
+                this.tileSize * this.scale, 
+                this.tileSize * this.scale)
 
         })
     }
 
     zoom(deltaY) {
-        this.scale = 1 + (deltaY / 1000)
-        this.ctx.scale(this.scale, this.scale)
+        // this.scale = 1 + (deltaY / 1000)
+        if (this.scale > 1.5) {
+            this.scale += deltaY / 500
+        } else if (this.scale < 1) {
+            this.scale += deltaY / 1500
+        } else {
+            this.scale += deltaY / 1000
+        }
+        if (this.scale < 0.5) this.scale = 0.5
+        if (this.scale > 5) this.scale = 5
+        console.log(this.scale)
+        this.offsetX = (this.width / 2) - (this.rows * this.tileSize * this.scale / 2)
+        this.offsetY = (this.height / 2) - (this.columns * this.tileSize * this.scale / 2)
+        // this.offsetX = this.offsetX * this.scale
+        // this.offsetY = this.offsetY * this.scale
+        // this.ctx.save()
+        // this.ctx.translate(this.width / 2, this.height / 2)
+        // this.ctx.scale(this.scale, this.scale)
+        // this.ctx.translate(-this.width / 2, -this.height / 2)
+        // this.ctx.restore()
     }
 }
