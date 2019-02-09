@@ -12,8 +12,8 @@ export default class Game {
     this.state = GAMESTATE.MENU
     this.objects = []
     this.tiles = []
-    this.rows = 500
-    this.columns = 500
+    this.rows = 20
+    this.columns = 20
     this.width = 800
     this.height = 600
     this.tileSize = 64
@@ -21,8 +21,8 @@ export default class Game {
     this.offsetY = 0
     this.speed = 1
     this.scale = 1
-    this.scaledOffsetX
-    this.scaledOffsetY
+    this.scaledOffsetX = 0
+    this.scaledOffsetY = 0
     this.keyboard = null
     this.mouse = null
     this.ctx = ctx
@@ -60,6 +60,8 @@ export default class Game {
   draw(ctx, img) {
     let startCol = Math.floor(this.scaledOffsetX / (this.tileSize * this.scale))
     let startRow = Math.floor(this.scaledOffsetY / (this.tileSize * this.scale))
+    if (startCol < 0) startCol = 0
+    if (startRow < 0) startRow = 0
     let endCol =
       Math.ceil(this.width / (this.tileSize * this.scale)) + startCol + 1
     let endRow =
