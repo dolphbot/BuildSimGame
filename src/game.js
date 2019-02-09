@@ -85,6 +85,21 @@ export default class Game {
     }
   }
 
+  selectTile(x, y) {
+    let c =
+      Math.floor(
+        (x + (this.scaledOffsetX % (this.tileSize * this.scale))) /
+          (this.tileSize * this.scale)
+      ) + Math.floor(this.scaledOffsetX / (this.tileSize * this.scale))
+    let r =
+      Math.floor(
+        (y + (this.scaledOffsetY % (this.tileSize * this.scale))) /
+          (this.tileSize * this.scale)
+      ) + Math.floor(this.scaledOffsetY / (this.tileSize * this.scale))
+    let i = r * this.columns + c
+    this.tiles[i] = 2
+  }
+
   zoom(deltaY) {
     if (this.scale > 1.5) {
       this.scale -= deltaY / 500

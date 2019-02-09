@@ -3,5 +3,8 @@ export default class MouseInput {
     document.addEventListener("wheel", event => {
       game.zoom(event.deltaY)
     })
+    document.addEventListener("click", event => {
+      game.selectTile(event.clientX, event.clientY)
+    })
   }
 }
