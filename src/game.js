@@ -1,5 +1,5 @@
-import KeyboardInput from './keyboard.js'
-import MouseInput from './mouse.js'
+import KeyboardInput from "./keyboard.js"
+import MouseInput from "./mouse.js"
 
 const GAMESTATE = {
   MENU: 0,
@@ -85,17 +85,13 @@ export default class Game {
 
   zoom(deltaY) {
     if (this.scale > 1.5) {
-      this.scale += deltaY / 500
+      this.scale -= deltaY / 500
     } else if (this.scale < 1) {
-      this.scale += deltaY / 1500
+      this.scale -= deltaY / 1500
     } else {
-      this.scale += deltaY / 1000
+      this.scale -= deltaY / 1000
     }
     if (this.scale < 0.5) this.scale = 0.5
     if (this.scale > 5) this.scale = 5
-
-    // this.offsetX = this.width / 2 - (this.rows * this.tileSize * this.scale) / 2
-    // this.offsetY =
-    //   this.height / 2 - (this.columns * this.tileSize * this.scale) / 2
   }
 }

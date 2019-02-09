@@ -7,7 +7,7 @@ export default class KeyboardInput {
     this.minus = false
     this.plus = false
 
-    document.addEventListener('keydown', event => {
+    document.addEventListener("keydown", event => {
       switch (event.keyCode) {
         case 87:
           this.W = true
@@ -29,7 +29,7 @@ export default class KeyboardInput {
           break
       }
     })
-    document.addEventListener('keyup', event => {
+    document.addEventListener("keyup", event => {
       switch (event.keyCode) {
         case 87:
           this.W = false
