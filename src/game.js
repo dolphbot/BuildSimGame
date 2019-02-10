@@ -1,5 +1,6 @@
-import KeyboardInput from "./keyboard.js"
-import MouseInput from "./mouse.js"
+import KeyboardInput from './keyboard.js'
+import MouseInput from './mouse.js'
+import Tile from './tile.js'
 
 const GAMESTATE = {
   MENU: 0,
@@ -30,7 +31,7 @@ export default class Game {
 
   start() {
     for (let i = 0; i < this.rows * this.columns; i++) {
-      this.tiles.push(Math.floor(Math.random() * Math.floor(4)))
+      this.tiles.push(new Tile(Math.floor(Math.random() * Math.floor(4))))
     }
     this.keyboard = new KeyboardInput()
     this.mouse = new MouseInput(this)
@@ -72,7 +73,7 @@ export default class Game {
       for (let c = startCol; c < endCol; c++) {
         ctx.drawImage(
           img,
-          this.tiles[r * this.columns + c] * this.tileSize,
+          this.tiles[r * this.columns + c].index * this.tileSize,
           0,
           this.tileSize,
           this.tileSize,
@@ -81,23 +82,55 @@ export default class Game {
           this.tileSize * this.scale,
           this.tileSize * this.scale
         )
+        if (this.tiles[r * this.columns + c].isHighlighted) {
+          ctx.strokeStyle = 'yellow'
+          ctx.strokeRect(
+            c * this.tileSize * this.scale - this.scaledOffsetX,
+            r * this.tileSize * this.scale - this.scaledOffsetY,
+            this.tileSize * this.scale,
+            this.tileSize * this.scale
+          )
+        }
       }
     }
   }
 
-  selectTile(x, y) {
-    let c =
-      Math.floor(
-        (x + (this.scaledOffsetX % (this.tileSize * this.scale))) /
-          (this.tileSize * this.scale)
-      ) + Math.floor(this.scaledOffsetX / (this.tileSize * this.scale))
-    let r =
-      Math.floor(
-        (y + (this.scaledOffsetY % (this.tileSize * this.scale))) /
-          (this.tileSize * this.scale)
-      ) + Math.floor(this.scaledOffsetY / (this.tileSize * this.scale))
+  highlightTile(x, y) {
+    for (const tile of this.tiles) {
+      tile.isHighlighted = false
+    }
+    let ax = x + this.scaledOffsetX
+    let ay = y + this.scaledOffsetY
+    let c = Math.floor(ax / (this.tileSize * this.scale))
+    let r = Math.floor(ay / (this.tileSize * this.scale))
     let i = r * this.columns + c
-    this.tiles[i] = 2
+    this.tiles[i].isHighlighted = true
+  }
+
+  selectTile(x, y) {
+    let rx =
+      this.tileSize * this.scale -
+      (this.scaledOffsetX % (this.tileSize * this.scale))
+    let ry =
+      this.tileSize * this.scale -
+      (this.scaledOffsetY % (this.tileSize * this.scale))
+    let ax = x + this.scaledOffsetX
+    let ay = y + this.scaledOffsetY
+    let c = Math.floor(ax / (this.tileSize * this.scale))
+    let r = Math.floor(ay / (this.tileSize * this.scale))
+    // console.log(c, r)
+    // let c =
+    //   Math.floor(
+    //     (x + (this.scaledOffsetX % (this.tileSize * this.scale))) /
+    //       (this.tileSize * this.scale)
+    //   ) + Math.floor(this.scaledOffsetX / (this.tileSize * this.scale))
+    // let r =
+    //   Math.floor(
+    //     (y + (this.scaledOffsetY % (this.tileSize * this.scale))) /
+    //       (this.tileSize * this.scale)
+    //   ) + Math.floor(this.scaledOffsetY / (this.tileSize * this.scale))
+    let i = r * this.columns + c
+    this.tiles[i].index = 2
   }
 
   zoom(deltaY) {

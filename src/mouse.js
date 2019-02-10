@@ -1,9 +1,12 @@
 export default class MouseInput {
   constructor(game) {
-    document.addEventListener("wheel", event => {
+    document.addEventListener('wheel', event => {
       game.zoom(event.deltaY)
     })
-    document.addEventListener("click", event => {
+    document.getElementById('canvas').addEventListener('mousemove', event => {
+      game.highlightTile(event.clientX, event.clientY)
+    })
+    document.getElementById('canvas').addEventListener('click', event => {
       game.selectTile(event.clientX, event.clientY)
     })
   }
